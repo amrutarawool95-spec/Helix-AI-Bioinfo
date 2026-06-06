@@ -14,7 +14,139 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      concepts: {
+        Row: {
+          analogy: string | null
+          applied_case: string | null
+          category: string | null
+          code_lang: string | null
+          code_snippet: string | null
+          core_idea: Json
+          created_at: string
+          definition: string
+          diagram_prompt: string | null
+          id: string
+          image_data_url: string | null
+          key_steps: Json
+          slug: string
+          subcategory: string | null
+          title: string
+        }
+        Insert: {
+          analogy?: string | null
+          applied_case?: string | null
+          category?: string | null
+          code_lang?: string | null
+          code_snippet?: string | null
+          core_idea?: Json
+          created_at?: string
+          definition: string
+          diagram_prompt?: string | null
+          id?: string
+          image_data_url?: string | null
+          key_steps?: Json
+          slug: string
+          subcategory?: string | null
+          title: string
+        }
+        Update: {
+          analogy?: string | null
+          applied_case?: string | null
+          category?: string | null
+          code_lang?: string | null
+          code_snippet?: string | null
+          core_idea?: Json
+          created_at?: string
+          definition?: string
+          diagram_prompt?: string | null
+          id?: string
+          image_data_url?: string | null
+          key_steps?: Json
+          slug?: string
+          subcategory?: string | null
+          title?: string
+        }
+        Relationships: []
+      }
+      library_items: {
+        Row: {
+          concept_id: string
+          created_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          concept_id: string
+          created_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          concept_id?: string
+          created_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "library_items_concept_id_fkey"
+            columns: ["concept_id"]
+            isOneToOne: false
+            referencedRelation: "concepts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          display_name: string | null
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          display_name?: string | null
+          id: string
+        }
+        Update: {
+          created_at?: string
+          display_name?: string | null
+          id?: string
+        }
+        Relationships: []
+      }
+      search_history: {
+        Row: {
+          concept_id: string | null
+          created_at: string
+          id: string
+          query: string
+          user_id: string
+        }
+        Insert: {
+          concept_id?: string | null
+          created_at?: string
+          id?: string
+          query: string
+          user_id: string
+        }
+        Update: {
+          concept_id?: string | null
+          created_at?: string
+          id?: string
+          query?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "search_history_concept_id_fkey"
+            columns: ["concept_id"]
+            isOneToOne: false
+            referencedRelation: "concepts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
