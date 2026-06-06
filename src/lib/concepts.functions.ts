@@ -12,9 +12,9 @@ const BreakdownSchema = z.object({
   definition: z.string().min(10).max(600),
   core_idea: z.array(z.string().min(3).max(280)).min(2).max(5),
   key_steps: z.array(z.object({
-    title: z.string().min(1).max(80),
-    detail: z.string().min(3).max(240),
-  })).min(2).max(6),
+    title: z.string().min(1).max(160),
+    detail: z.string().min(3).max(1200),
+  })).min(2).max(8),
   analogy: z.string().min(10).max(1200),
   applied_case: z.string().min(5).max(1200),
   code_snippet: z.string().min(5).max(4000),
