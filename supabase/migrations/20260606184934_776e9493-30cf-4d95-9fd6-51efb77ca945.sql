@@ -1,0 +1,1 @@
+CREATE POLICY "concepts_insert_auth" ON public.concepts FOR INSERT TO authenticated WITH CHECK (true);
