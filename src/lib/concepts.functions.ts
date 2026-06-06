@@ -15,11 +15,11 @@ const BreakdownSchema = z.object({
     title: z.string().min(1).max(80),
     detail: z.string().min(3).max(240),
   })).min(2).max(6),
-  analogy: z.string().min(10).max(400),
-  applied_case: z.string().min(5).max(300),
-  code_snippet: z.string().min(5).max(2000),
+  analogy: z.string().min(10).max(1200),
+  applied_case: z.string().min(5).max(1200),
+  code_snippet: z.string().min(5).max(4000),
   code_lang: z.string().min(1).max(40),
-  diagram_prompt: z.string().min(10).max(400),
+  diagram_prompt: z.string().min(10).max(1200),
 });
 
 type Breakdown = z.infer<typeof BreakdownSchema>;
