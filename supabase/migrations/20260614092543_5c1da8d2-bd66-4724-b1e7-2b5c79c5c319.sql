@@ -1,0 +1,1 @@
+DROP POLICY IF EXISTS concepts_insert_auth ON public.concepts;
