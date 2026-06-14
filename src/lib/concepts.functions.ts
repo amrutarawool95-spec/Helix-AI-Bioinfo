@@ -6,32 +6,35 @@ import { slugify } from "@/lib/slug";
 const LOVABLE_AI_URL = "https://ai.gateway.lovable.dev/v1";
 
 const BreakdownSchema = z.object({
-  title: z.string().min(1).max(120),
-  category: z.string().min(1).max(60),
-  subcategory: z.string().min(1).max(80),
-  definition: z.string().min(10).max(600),
-  core_idea: z.array(z.string().min(3).max(280)).min(2).max(5),
+  title: z.string().min(1).max(160),
+  category: z.string().min(1).max(80),
+  subcategory: z.string().min(1).max(120),
+  definition: z.string().min(10).max(2500),
+  core_idea: z.array(z.string().min(3).max(800)).min(3).max(8),
   key_steps: z.array(z.object({
-    title: z.string().min(1).max(160),
-    detail: z.string().min(3).max(1200),
-  })).min(2).max(8),
-  analogy: z.string().min(10).max(1200),
-  applied_case: z.string().min(5).max(1200),
-  code_snippet: z.string().min(5).max(4000),
+    title: z.string().min(1).max(200),
+    detail: z.string().min(3).max(3000),
+  })).min(3).max(12),
+  analogy: z.string().min(10).max(2500),
+  applied_case: z.string().min(5).max(3000),
+  code_snippet: z.string().min(5).max(8000),
   code_lang: z.string().min(1).max(40),
-  diagram_prompt: z.string().min(10).max(1200),
+  diagram_prompt: z.string().min(10).max(1500),
+  deep_dive: z.string().min(20).max(6000),
+  common_pitfalls: z.array(z.string().min(3).max(600)).min(2).max(8),
+  further_reading: z.array(z.string().min(3).max(300)).min(2).max(8),
 });
 
 type Breakdown = z.infer<typeof BreakdownSchema>;
 
 async function generateBreakdown(query: string, apiKey: string): Promise<Breakdown> {
-  const systemPrompt = `You are a precise scientific tutor for bioinformatics, computational biology, genomics, statistics, AI/ML, and computer science. Break a concept into a structured study card. Output via the provided tool. Be accurate, concrete, and concise. Use markdown-free plain text. The diagram_prompt must describe a clean, minimalist, scientific technical diagram on a dark background suitable for AI image generation.`;
+  const systemPrompt = `You are an expert scientific tutor for bioinformatics, computational biology, genomics, statistics, AI/ML, and computer science. Produce a thorough, in-depth study card that fully explains the concept so a learner needs no other source. Be accurate, concrete, and richly detailed — NOT terse. Use markdown-free plain text. Length guidance: definition 4-8 sentences; deep_dive 4-8 paragraphs covering history, math/mechanism, variants, assumptions, and context; each key_step detail 3-6 sentences; analogy a vivid extended paragraph; applied_case a real-world worked example with specifics; code_snippet a complete runnable example with comments. Include common_pitfalls and further_reading (book/paper/tool names). The diagram_prompt must describe a clean, minimalist, scientific technical diagram on a dark background suitable for AI image generation.`;
 
   const tool = {
     type: "function" as const,
     function: {
       name: "concept_breakdown",
-      description: "Structured breakdown of a scientific or computational concept.",
+      description: "Structured in-depth breakdown of a scientific or computational concept.",
       parameters: {
         type: "object",
         properties: {
@@ -57,8 +60,11 @@ async function generateBreakdown(query: string, apiKey: string): Promise<Breakdo
           code_snippet: { type: "string" },
           code_lang: { type: "string" },
           diagram_prompt: { type: "string" },
+          deep_dive: { type: "string" },
+          common_pitfalls: { type: "array", items: { type: "string" } },
+          further_reading: { type: "array", items: { type: "string" } },
         },
-        required: ["title", "category", "subcategory", "definition", "core_idea", "key_steps", "analogy", "applied_case", "code_snippet", "code_lang", "diagram_prompt"],
+        required: ["title", "category", "subcategory", "definition", "core_idea", "key_steps", "analogy", "applied_case", "code_snippet", "code_lang", "diagram_prompt", "deep_dive", "common_pitfalls", "further_reading"],
         additionalProperties: false,
       },
     },
@@ -68,7 +74,7 @@ async function generateBreakdown(query: string, apiKey: string): Promise<Breakdo
     method: "POST",
     headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
     body: JSON.stringify({
-      model: "google/gemini-2.5-flash",
+      model: "google/gemini-2.5-pro",
       messages: [
         { role: "system", content: systemPrompt },
         { role: "user", content: `Break down this concept: "${query}"` },
@@ -151,6 +157,9 @@ export const generateConcept = createServerFn({ method: "POST" })
           code_snippet: breakdown.code_snippet,
           code_lang: breakdown.code_lang,
           diagram_prompt: breakdown.diagram_prompt,
+          deep_dive: breakdown.deep_dive,
+          common_pitfalls: breakdown.common_pitfalls,
+          further_reading: breakdown.further_reading,
           image_data_url: image,
         })
         .select("*")

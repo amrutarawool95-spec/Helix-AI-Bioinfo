@@ -159,6 +159,48 @@ function ConceptInner() {
               <code>{c.code_snippet}</code>
             </pre>
           </div>
+
+          {/* Deep Dive */}
+          {c.deep_dive && (
+            <div className="col-span-12 bg-zinc-900 border border-zinc-800 p-6 rounded-xl tile-in" style={{ animationDelay: "700ms" }}>
+              <span className="text-[10px] font-mono text-teal-400 uppercase tracking-widest mb-4 block">08 Deep Dive</span>
+              <div className="text-sm text-zinc-300 leading-relaxed space-y-4 max-w-4xl">
+                {String(c.deep_dive).split(/\n\n+/).map((p, i) => (
+                  <p key={i}>{p}</p>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Common Pitfalls */}
+          {Array.isArray(c.common_pitfalls) && c.common_pitfalls.length > 0 && (
+            <div className="col-span-12 lg:col-span-6 bg-zinc-900 border border-zinc-800 p-6 rounded-xl tile-in" style={{ animationDelay: "800ms" }}>
+              <span className="text-[10px] font-mono text-teal-400 uppercase tracking-widest mb-4 block">09 Common Pitfalls</span>
+              <ul className="space-y-3">
+                {(c.common_pitfalls as string[]).map((p, i) => (
+                  <li key={i} className="flex gap-3 text-sm text-zinc-400 leading-relaxed">
+                    <span className="text-teal-500 font-mono text-xs mt-1 shrink-0">!</span>
+                    <span>{p}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Further Reading */}
+          {Array.isArray(c.further_reading) && c.further_reading.length > 0 && (
+            <div className="col-span-12 lg:col-span-6 bg-zinc-900 border border-zinc-800 p-6 rounded-xl tile-in" style={{ animationDelay: "900ms" }}>
+              <span className="text-[10px] font-mono text-teal-400 uppercase tracking-widest mb-4 block">10 Further Reading</span>
+              <ul className="space-y-3">
+                {(c.further_reading as string[]).map((r, i) => (
+                  <li key={i} className="flex gap-3 text-sm text-zinc-400 leading-relaxed">
+                    <span className="text-teal-500 font-mono text-xs mt-1 shrink-0">→</span>
+                    <span>{r}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       </div>
     </>
