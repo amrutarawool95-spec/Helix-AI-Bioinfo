@@ -157,6 +157,9 @@ export const generateConcept = createServerFn({ method: "POST" })
           code_snippet: breakdown.code_snippet,
           code_lang: breakdown.code_lang,
           diagram_prompt: breakdown.diagram_prompt,
+          deep_dive: breakdown.deep_dive,
+          common_pitfalls: breakdown.common_pitfalls,
+          further_reading: breakdown.further_reading,
           image_data_url: image,
         })
         .select("*")
