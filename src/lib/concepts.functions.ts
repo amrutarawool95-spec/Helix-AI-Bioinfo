@@ -28,13 +28,13 @@ const BreakdownSchema = z.object({
 type Breakdown = z.infer<typeof BreakdownSchema>;
 
 async function generateBreakdown(query: string, apiKey: string): Promise<Breakdown> {
-  const systemPrompt = `You are a precise scientific tutor for bioinformatics, computational biology, genomics, statistics, AI/ML, and computer science. Break a concept into a structured study card. Output via the provided tool. Be accurate, concrete, and concise. Use markdown-free plain text. The diagram_prompt must describe a clean, minimalist, scientific technical diagram on a dark background suitable for AI image generation.`;
+  const systemPrompt = `You are an expert scientific tutor for bioinformatics, computational biology, genomics, statistics, AI/ML, and computer science. Produce a thorough, in-depth study card that fully explains the concept so a learner needs no other source. Be accurate, concrete, and richly detailed — NOT terse. Use markdown-free plain text. Length guidance: definition 4-8 sentences; deep_dive 4-8 paragraphs covering history, math/mechanism, variants, assumptions, and context; each key_step detail 3-6 sentences; analogy a vivid extended paragraph; applied_case a real-world worked example with specifics; code_snippet a complete runnable example with comments. Include common_pitfalls and further_reading (book/paper/tool names). The diagram_prompt must describe a clean, minimalist, scientific technical diagram on a dark background suitable for AI image generation.`;
 
   const tool = {
     type: "function" as const,
     function: {
       name: "concept_breakdown",
-      description: "Structured breakdown of a scientific or computational concept.",
+      description: "Structured in-depth breakdown of a scientific or computational concept.",
       parameters: {
         type: "object",
         properties: {
@@ -60,8 +60,11 @@ async function generateBreakdown(query: string, apiKey: string): Promise<Breakdo
           code_snippet: { type: "string" },
           code_lang: { type: "string" },
           diagram_prompt: { type: "string" },
+          deep_dive: { type: "string" },
+          common_pitfalls: { type: "array", items: { type: "string" } },
+          further_reading: { type: "array", items: { type: "string" } },
         },
-        required: ["title", "category", "subcategory", "definition", "core_idea", "key_steps", "analogy", "applied_case", "code_snippet", "code_lang", "diagram_prompt"],
+        required: ["title", "category", "subcategory", "definition", "core_idea", "key_steps", "analogy", "applied_case", "code_snippet", "code_lang", "diagram_prompt", "deep_dive", "common_pitfalls", "further_reading"],
         additionalProperties: false,
       },
     },
