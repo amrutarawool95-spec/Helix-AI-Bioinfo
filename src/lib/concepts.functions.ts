@@ -142,7 +142,8 @@ export const generateConcept = createServerFn({ method: "POST" })
     if (!concept) {
       const breakdown = await generateBreakdown(data.query, apiKey);
       const image = await generateDiagram(breakdown.diagram_prompt, apiKey);
-      const { data: ins, error } = await supabase
+      const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+      const { data: ins, error } = await supabaseAdmin
         .from("concepts")
         .insert({
           slug,
