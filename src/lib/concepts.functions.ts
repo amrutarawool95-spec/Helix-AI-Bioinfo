@@ -6,20 +6,23 @@ import { slugify } from "@/lib/slug";
 const LOVABLE_AI_URL = "https://ai.gateway.lovable.dev/v1";
 
 const BreakdownSchema = z.object({
-  title: z.string().min(1).max(120),
-  category: z.string().min(1).max(60),
-  subcategory: z.string().min(1).max(80),
-  definition: z.string().min(10).max(600),
-  core_idea: z.array(z.string().min(3).max(280)).min(2).max(5),
+  title: z.string().min(1).max(160),
+  category: z.string().min(1).max(80),
+  subcategory: z.string().min(1).max(120),
+  definition: z.string().min(10).max(2500),
+  core_idea: z.array(z.string().min(3).max(800)).min(3).max(8),
   key_steps: z.array(z.object({
-    title: z.string().min(1).max(160),
-    detail: z.string().min(3).max(1200),
-  })).min(2).max(8),
-  analogy: z.string().min(10).max(1200),
-  applied_case: z.string().min(5).max(1200),
-  code_snippet: z.string().min(5).max(4000),
+    title: z.string().min(1).max(200),
+    detail: z.string().min(3).max(3000),
+  })).min(3).max(12),
+  analogy: z.string().min(10).max(2500),
+  applied_case: z.string().min(5).max(3000),
+  code_snippet: z.string().min(5).max(8000),
   code_lang: z.string().min(1).max(40),
-  diagram_prompt: z.string().min(10).max(1200),
+  diagram_prompt: z.string().min(10).max(1500),
+  deep_dive: z.string().min(20).max(6000),
+  common_pitfalls: z.array(z.string().min(3).max(600)).min(2).max(8),
+  further_reading: z.array(z.string().min(3).max(300)).min(2).max(8),
 });
 
 type Breakdown = z.infer<typeof BreakdownSchema>;
