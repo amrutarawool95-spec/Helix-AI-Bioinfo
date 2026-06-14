@@ -21,10 +21,13 @@ export type Database = {
           category: string | null
           code_lang: string | null
           code_snippet: string | null
+          common_pitfalls: Json | null
           core_idea: Json
           created_at: string
+          deep_dive: string | null
           definition: string
           diagram_prompt: string | null
+          further_reading: Json | null
           id: string
           image_data_url: string | null
           key_steps: Json
@@ -38,10 +41,13 @@ export type Database = {
           category?: string | null
           code_lang?: string | null
           code_snippet?: string | null
+          common_pitfalls?: Json | null
           core_idea?: Json
           created_at?: string
+          deep_dive?: string | null
           definition: string
           diagram_prompt?: string | null
+          further_reading?: Json | null
           id?: string
           image_data_url?: string | null
           key_steps?: Json
@@ -55,10 +61,13 @@ export type Database = {
           category?: string | null
           code_lang?: string | null
           code_snippet?: string | null
+          common_pitfalls?: Json | null
           core_idea?: Json
           created_at?: string
+          deep_dive?: string | null
           definition?: string
           diagram_prompt?: string | null
+          further_reading?: Json | null
           id?: string
           image_data_url?: string | null
           key_steps?: Json
