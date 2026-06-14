@@ -74,7 +74,7 @@ async function generateBreakdown(query: string, apiKey: string): Promise<Breakdo
     method: "POST",
     headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
     body: JSON.stringify({
-      model: "google/gemini-2.5-flash",
+      model: "google/gemini-2.5-pro",
       messages: [
         { role: "system", content: systemPrompt },
         { role: "user", content: `Break down this concept: "${query}"` },
